@@ -37,7 +37,8 @@ enum rpmtransFlags_e {
     RPMTRANS_FLAG_NOCONTEXTS	= (1 <<  8),	/*!< from --nocontexts */
     RPMTRANS_FLAG_NOCAPS	= (1 <<  9),	/*!< from --nocaps */
     RPMTRANS_FLAG_NODB		= (1 << 10),	/*!< from --nodb */
-    /* bits 11-13 unused */
+    RPMTRANS_FLAG_EPKG		= (1 << 11), /*!< from --epkg */
+    /* bits 12-13 unused */
     RPMTRANS_FLAG_NOPREUNTRANS	= (1 << 14),	/*!< from --nopreuntrans */
     RPMTRANS_FLAG_NOPOSTUNTRANS	= (1 << 15),	/*!< from --nopostuntrans */
     RPMTRANS_FLAG_NOTRIGGERPREIN= (1 << 16),	/*!< from --notriggerprein */
