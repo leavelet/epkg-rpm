@@ -30,6 +30,7 @@ target_sources(librpm PRIVATE
 	cpio.c cpio.h depends.c order.c formats.c tagexts.c fsm.c fsm.h
 	manifest.c manifest.h package.c
 	poptALL.c poptI.c poptQV.c psm.c query.c
+	prootexec.c prootexec.h
 	rpmal.c rpmal.h rpmchecksig.c rpmds.c rpmds_internal.h
 	rpmfi.c rpmfi_internal.h
 	rpmgi.h rpmgi.c rpminstall.c rpmts_internal.h

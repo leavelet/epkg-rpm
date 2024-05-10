@@ -1679,7 +1679,7 @@ rpmRC runScript(rpmts ts, rpmte te, Header h, ARGV_const_t prefixes,
     rpmTagVal stag = rpmScriptTag(script);
     FD_t sfd = NULL;
     int warn_only = !(rpmScriptFlags(script) & RPMSCRIPT_FLAG_CRITICAL);
-
+    
     if (rpmScriptChrootIn(script))
 	return RPMRC_FAIL;
 
@@ -1694,8 +1694,19 @@ rpmRC runScript(rpmts ts, rpmte te, Header h, ARGV_const_t prefixes,
 	sfd = rpmtsScriptFd(ts);
 
     rpmswEnter(rpmtsOp(ts, RPMTS_OP_SCRIPTLETS), 0);
+
+    if (rpmtsFlags(ts) & RPMTRANS_FLAG_EPKG) {
+	rpmScriptChrootOut(script);
+    }
+
     rc = rpmScriptRun(script, arg1, arg2, sfd,
 		      prefixes, rpmtsPlugins(ts));
+
+    if (rpmtsFlags(ts) & RPMTRANS_FLAG_EPKG) {
+	if (rpmScriptChrootIn(script))
+	    return RPMRC_FAIL;
+    }
+    
     rpmswExit(rpmtsOp(ts, RPMTS_OP_SCRIPTLETS), 0);
 
     /* Map warn-only errors to "notfound" for script stop callback */

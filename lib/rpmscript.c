@@ -22,6 +22,8 @@
 
 #include "debug.h"
 
+#include "prootexec.h"
+
 struct scriptNextFileFunc_s {
     nextfilefunc func;		/* function producing input for script */
     void *param;		/* parameter for func */
@@ -270,7 +272,7 @@ static void doScriptExec(ARGV_const_t argv, ARGV_const_t prefixes,
     }
 	
     if (chdir("/") == 0) {
-	xx = execv(argv[0], argv);
+	xx = prootexecv(argv[0], argv);
 	if (xx) {
 	    rpmlog(RPMLOG_ERR,
 		    _("failed to exec scriptlet interpreter %s: %s\n"),
@@ -484,6 +486,8 @@ rpmRC rpmScriptRun(rpmScript script, int arg1, int arg2, FD_t scriptFd,
 	if (script_type & RPMSCRIPTLET_EXEC) {
 	    rc = runExtScript(plugins, prefixes, script->descr, lvl, scriptFd, &args, script->body, arg1, arg2, script->nextFileFunc);
 	} else {
+	    // lua scripts not supported yet
+	    rpmlog(RPMLOG_ERR, _("Lua scripts not supported yet\n"));
 	    rc = runLuaScript(plugins, prefixes, script->descr, lvl, scriptFd, &args, script->body, arg1, arg2, script->nextFileFunc);
 	}
     }
